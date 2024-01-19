@@ -14,7 +14,12 @@ export class Controller {
             this.view.createPost(post, postId);
         });
 
-        this.view.deletePost();
+        // this.view.openPost(() => {
+        //     this.model.openPost()
+        // });
+
+        this.model.openPost()
+
 
 
     }

@@ -33,6 +33,24 @@ export class View {
                   `;
     }
 
+
+    openPost(callback) {
+        const posts = document.querySelectorAll('.posts');
+        posts.forEach(post => {
+            post.addEventListener('click', (e) => {
+                const post = e.target.closest('.post');
+                console.log(post)
+                if (post) {
+                    const postId = post.dataset.postId;
+                    callback(postId)
+
+                }
+            })
+        })
+    }
+
+
+
     deletePost(postId) {
         const deleteBtns = document.querySelectorAll('.delete-post-btn');
 

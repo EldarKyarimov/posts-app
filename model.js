@@ -9,6 +9,7 @@ export class Model {
             const response = await api.json();
             const data = response.slice(0, 10);
             data.forEach(post => callback(post.title, post.id, false));
+
         } catch {
             callback(null, true);
             console.log('Error')
@@ -19,6 +20,7 @@ export class Model {
         try {
             const api = await fetch(`${this.URL}posts/${postId}`);
             const data = await api.json();
+            console.log('check')
             callback(data.title, data.body);
         } catch {
             throw new Error('Unexpected error occured')
