@@ -16,7 +16,7 @@ export class Model {
         }
     }
 
-    async openPost(postId, callback) {
+    async returnPostData(postId, callback) {
         try {
             const api = await fetch(`${this.URL}posts/${postId}`);
             const data = await api.json();
@@ -27,17 +27,32 @@ export class Model {
         }
     }
 
-
     async deletePost(postId, callback) {
         try {
-            const api = await fetch(`${this.URL}posts/${postId}`, {
+            const api = await fetch(`${this.URL}post/${postId}`, {
                 method: 'DELETE',
             });
-            callback(postId)
-
+            if (api.ok) {
+                callback(postId)
+            }
         } catch {
             throw new Error('Error')
         }
     }
+
+    async showComments(postId,) {
+        try {
+            const api = await fetch(`${this.URL}posts/${postId}/comments`);
+            const data = await api.json();
+            // const postComment = data.filter((post) => {
+            //     post.
+            // })
+            console.log(data)
+        } catch {
+            throw new Error('Error');
+        }
+    }
+
+
 
 }

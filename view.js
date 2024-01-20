@@ -42,6 +42,9 @@ export class View {
                 console.log(post)
                 if (post) {
                     const postId = post.dataset.postId;
+                    this.mainContainer.classList.add('hidden');
+                    this.selectedPost.classList.remove('hidden')
+                    console.log(postId)
                     callback(postId)
 
                 }
@@ -49,7 +52,23 @@ export class View {
         })
     }
 
+    getPostData(title, body) {
+        this.postTitle.innerHTML = title;
+        this.postBody.innerHTML = body;
+    }
 
+    listenDeleteBtn() {
+        const deleteBtns = document.querySelectorAll('.delete-post-btn');
+        Array.from(deleteBtns).forEach(deleteBtn => {
+            deleteBtn.addEventListener('click', (e) => {
+                const post = e.target.closest('.delete-post-btn')
+                // const postId = deleteBtn.getAttribute('data-post-id');
+                console.log(post);
+                callback(post);
+
+            })
+        })
+    }
 
     deletePost(postId) {
         const deleteBtns = document.querySelectorAll('.delete-post-btn');
@@ -61,6 +80,8 @@ export class View {
             });
         });
     }
+
+
 
 
 

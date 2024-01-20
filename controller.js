@@ -14,13 +14,10 @@ export class Controller {
             this.view.createPost(post, postId);
         });
 
-        // this.view.openPost(() => {
-        //     this.model.openPost()
-        // });
-
-        this.model.openPost()
 
 
+        this.view.listenDeleteBtn();
+        this.model.showComments(7);
 
     }
 
