@@ -68,7 +68,6 @@ export class View {
         this.postBody.innerHTML = body;
     }
 
-
     listenDeleteBtn(callback) {
         const deleteBtns = document.querySelector('.posts');
         deleteBtns.addEventListener('click', (e) => {
@@ -88,17 +87,6 @@ export class View {
         }
     }
 
-    // addComment(name, email, comment) {
-    //     const data = `
-    //     <div class = 'comment'> 
-    //     <p>${name} /  ${email}</p>
-    //     <p>${comment}</p>
-    //     </div>
-    //     `
-
-    //     this.postComments.insertAdjacentHTML("beforeend", data);
-    // }
-
     addComment(name, email, comment) {
         const data = `
         <div class='comment'> 
@@ -108,8 +96,5 @@ export class View {
         `;
         this.postComments.insertAdjacentHTML("beforeend", data);
     }
-
-
-
 
 }

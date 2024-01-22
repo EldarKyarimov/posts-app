@@ -40,19 +40,6 @@ export class Model {
         }
     }
 
-    // async showComments(postId, callback) {
-    //     try {
-    //         const api = await fetch(`${this.URL}comments`);
-    //         const data = await api.json();
-    //         const postComments = data.filter((post) => post.postId === +postId)
-    //         postComments.forEach((comment) =>
-    //             callback(comment.name, comment.email, comment.body)
-    //         );
-    //     } catch {
-    //         throw new Error('Error');
-    //     }
-    // }
-
     async showComments(postId, callback) {
         try {
             const api = await fetch(`${this.URL}posts/${postId}/comments`);
@@ -64,6 +51,5 @@ export class Model {
             throw new Error('Error fetching comments');
         }
     }
-
 
 }
