@@ -5,7 +5,7 @@
 }
 
 body {
-    /* height: 100vh; */
+    height: 100vh;
     background: linear-gradient(144deg, #153677, #4e085f);
     display: flex;
     align-items: center;
@@ -56,6 +56,10 @@ posts-app {
     font-size: 1.3rem;
 }
 
+.txt {
+    width: 100%;
+}
+
 .create-btn {
     margin-right: 5px;
     height: 40px;
@@ -86,8 +90,37 @@ posts-app {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    margin-left: 2%;
+    margin: 0 2%;
+}
+
+.create-post {
+    height: 500px;
+    width: 500px;
+    background-color: whitesmoke;
+    border: 5px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin-top: 20px;
+}
+
+.post-body {
+    margin: 5px 0 10px 0;
+    height: 200px;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.382);
+    border-radius: 5px;
+}
+
+/* .comments {
+    margin-top: 10px;
+} */
+
+.post-comments {
+    height: 30px;
 }
 
 .hidden {

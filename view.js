@@ -9,12 +9,18 @@ export class View {
         this.postComments = document.querySelector(".post-comments");
         this.postTitle = document.querySelector(".title");
         this.selectedPost = document.querySelector(".selected-post");
+        this.display = document.querySelectorAll('.posts-info-display');
     }
 
-    listenCreateBtn(callback) {
-        Array.from(this.createBtn).forEach(btn => {
-            btn.addEventListener('click', callback);
-        });
+    listenBackClick() {
+        const back = this.display;
+        Array.from(back).forEach(btn => {
+            btn.addEventListener('click', () => {
+                console.log('hello')
+                this.mainContainer.classList.remove("hidden");
+                this.selectedPost.classList.add("hidden");
+            })
+        })
     }
 
     changeWindow() {
@@ -23,33 +29,38 @@ export class View {
     }
 
     createPost(post, postId) {
-        const titleWords = post?.split(" ");
+        // console.log(post, postId)
+        const titleWords = post.split(" ");
         const editedTitle = `${titleWords.slice(0, 5).join(" ")}...`;
         this.posts.innerHTML += `
                   <div class="post"  data-post-id="${postId}">
-                  <p>${editedTitle}<p>
+                  <p class="txt">${editedTitle}<p>
                   <button class = 'delete-post-btn' data-post-id="${postId}">X</button>
                   </div>
                   `;
     }
 
+    listenCreateBtn(callback) {
+        Array.from(this.createBtn).forEach(btn => {
+            btn.addEventListener('click', callback);
+        });
+    }
 
-    openPost(callback) {
-        const posts = document.querySelectorAll('.posts');
-        posts.forEach(post => {
-            post.addEventListener('click', (e) => {
-                const post = e.target.closest('.post');
-                console.log(post)
-                if (post) {
-                    const postId = post.dataset.postId;
+    listenPostClick(callback) {
+        this.posts.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-post-btn')) {
+                return;
+            }
+            const postElement = e.target.closest('.post');
+            if (postElement) {
+                const postId = postElement.dataset.postId;
+                if (postId) {
                     this.mainContainer.classList.add('hidden');
-                    this.selectedPost.classList.remove('hidden')
-                    console.log(postId)
-                    callback(postId)
-
+                    this.selectedPost.classList.remove('hidden');
+                    callback(postId);
                 }
-            })
-        })
+            }
+        });
     }
 
     getPostData(title, body) {
@@ -57,30 +68,46 @@ export class View {
         this.postBody.innerHTML = body;
     }
 
-    listenDeleteBtn() {
-        const deleteBtns = document.querySelectorAll('.delete-post-btn');
-        Array.from(deleteBtns).forEach(deleteBtn => {
-            deleteBtn.addEventListener('click', (e) => {
-                const post = e.target.closest('.delete-post-btn')
-                // const postId = deleteBtn.getAttribute('data-post-id');
-                console.log(post);
-                callback(post);
 
-            })
+    listenDeleteBtn(callback) {
+        const deleteBtns = document.querySelector('.posts');
+        deleteBtns.addEventListener('click', (e) => {
+            const deleteBtn = e.target.closest('.delete-post-btn');
+            if (!deleteBtn) return;
+            if (deleteBtn) {
+                const postId = e.target.closest(".post").getAttribute("data-post-id");
+                callback(postId);
+            }
         })
     }
 
     deletePost(postId) {
-        const deleteBtns = document.querySelectorAll('.delete-post-btn');
-
-        deleteBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const postId = btn.getAttribute('data-post-id');
-                callback(postId);
-            });
-        });
+        const deletedPost = document.querySelector(`[data-post-id="${postId}"]`);
+        if (deletedPost) {
+            deletedPost.remove();
+        }
     }
 
+    // addComment(name, email, comment) {
+    //     const data = `
+    //     <div class = 'comment'> 
+    //     <p>${name} /  ${email}</p>
+    //     <p>${comment}</p>
+    //     </div>
+    //     `
+
+    //     this.postComments.insertAdjacentHTML("beforeend", data);
+    // }
+
+    addComment(name, email, comment) {
+        const data = `
+        <div class='comment'> 
+            <p>${name} / ${email}</p>
+            <p>${comment}</p>
+        </div>
+        `;
+        this.postComments.insertAdjacentHTML("beforeend", data);
+    }
 
 
 

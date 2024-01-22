@@ -8,11 +8,11 @@ export class Model {
             const api = await fetch(`${this.URL}posts`);
             const response = await api.json();
             const data = response.slice(0, 10);
-            data.forEach(post => callback(post.title, post.id, false));
+            // console.log(data);
+            data.forEach(post => callback(post.title, post.id));
 
         } catch {
-            callback(null, true);
-            console.log('Error')
+            throw new Error('Error')
         }
     }
 
@@ -20,16 +20,16 @@ export class Model {
         try {
             const api = await fetch(`${this.URL}posts/${postId}`);
             const data = await api.json();
-            console.log('check')
+            // console.log('check')
             callback(data.title, data.body);
         } catch {
-            throw new Error('Unexpected error occured')
+            throw new Error('Error')
         }
     }
 
     async deletePost(postId, callback) {
         try {
-            const api = await fetch(`${this.URL}post/${postId}`, {
+            const api = await fetch(`${this.URL}posts/${postId}`, {
                 method: 'DELETE',
             });
             if (api.ok) {
@@ -40,19 +40,30 @@ export class Model {
         }
     }
 
-    async showComments(postId,) {
+    // async showComments(postId, callback) {
+    //     try {
+    //         const api = await fetch(`${this.URL}comments`);
+    //         const data = await api.json();
+    //         const postComments = data.filter((post) => post.postId === +postId)
+    //         postComments.forEach((comment) =>
+    //             callback(comment.name, comment.email, comment.body)
+    //         );
+    //     } catch {
+    //         throw new Error('Error');
+    //     }
+    // }
+
+    async showComments(postId, callback) {
         try {
             const api = await fetch(`${this.URL}posts/${postId}/comments`);
             const data = await api.json();
-            // const postComment = data.filter((post) => {
-            //     post.
-            // })
-            console.log(data)
-        } catch {
-            throw new Error('Error');
+            const postComments = data.filter(comment => comment.postId === +postId);
+            postComments.forEach(comment => callback(comment.name, comment.email, comment.body));
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+            throw new Error('Error fetching comments');
         }
     }
-
 
 
 }
